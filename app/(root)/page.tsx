@@ -13,7 +13,7 @@ const posts = [
     title: "We Robots"
   },
   {
-    createdAt: "2 days ago",
+    createdAt: new Date().toISOString(),
     views: 42,
     author: { _id: 2, name: "Jane Smith" },
     id: 2,
@@ -23,7 +23,7 @@ const posts = [
     title: "AI Innovations"
   },
   {
-    createdAt: "Last week",
+    createdAt: new Date().toISOString(),
     views: 78,
     author: { _id: 3, name: "Alice Johnson" },
     id: 3,
