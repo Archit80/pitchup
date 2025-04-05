@@ -1,44 +1,26 @@
 // import Image from "next/image";
 import SearchForm from "@/components/SearchForm"; 
 import StartupCard from "@/components/StartupCard";
-const posts = [
-  {
-    createdAt: new Date().toISOString(),
-    views: 55,
-    author: { _id: 1, name: "John Doe" },
-    id: 1,
-    description: "This is a description about innovative robotics technology",
-    image: "https://chargeraccount.org/wp-content/uploads/2023/06/K7Kk3DSxN0r4AVhONa9ruggbas3DWRIrbnHw1dJc-1-900x600.jpg", // Placeholder image path
-    category: "Robots",
-    title: "We Robots"
-  },
-  {
-    createdAt: new Date().toISOString(),
-    views: 42,
-    author: { _id: 2, name: "Jane Smith" },
-    id: 2,
-    description: "Revolutionizing AI-powered solutions for everyday challenges",
-    image: "https://media.tenor.com/_zWYqfZdneIAAAAe/shocked-face-shocked-meme.png", // Placeholder image path
-    category: "Artificial Intelligence",
-    title: "AI Innovations"
-  },
-  {
-    createdAt: new Date().toISOString(),
-    views: 78,
-    author: { _id: 3, name: "Alice Johnson" },
-    id: 3,
-    description: "Sustainable energy solutions for a greener future",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj3ZPyxEDIbxnzfeDURkmJLC9FyQut33B6qA&s", // Placeholder image path
-    category: "Green Tech",
-    title: "EcoTech Solutions"
-  }
-];
+import { STARTUPS_QUERY } from "../../sanity/lib/queries";
+// import { client } from "@/sanity/lib/client";
+import { StartupCardType } from "@/components/StartupCard";
+import { sanityFetch, SanityLive } from "@/sanity/lib/live";
+
+// const posts = await client.fetch(STARTUPS_QUERY);
 
 export default async function Home({searchParams}: {searchParams:
    Promise<{query?: string}>}) {
 
-  const query = (await searchParams).query;
 
+  const query = (await searchParams).query;
+  const params = { search: query ? `${query}*` : null };
+    console.log("Search params:", params);
+
+  const { data: posts } = await sanityFetch({
+    query: STARTUPS_QUERY,
+    params, // Pass an empty string if no search term
+  });
+    // console.log("Fetched posts:", posts);
   return (
     <div className="bg-white h-screen w-full font-work-sans">
 
@@ -59,16 +41,22 @@ export default async function Home({searchParams}: {searchParams:
 
       <ul className="startup_list mt-7 card_grid">
         {/* posts hai -> length > 0 hai -> map kardo  */}
+        {/* posts nahi hai -> length 0 hai -> no results found */}
 
-        { posts?.length > 0 ? (posts.map((post : StartupCardType) => ( 
-          <StartupCard key={post?.id} post={post} />
-        ))): (
+        {posts?.length > 0 ? (
+          posts.map((post: StartupCardType) => {
+            // console.log("Rendering post:", post);
+            return <StartupCard key={post.slug?.current || post.title} post={post} />;
+          })
+        ) : (
           <p className="no-result">No results found</p>
-        ) }
+        )}
         {/* posts nahi hai -> length 0 hai -> no results found  */}
       </ul>
 
       </section>
+
+      <SanityLive />
 
     </div>
   );

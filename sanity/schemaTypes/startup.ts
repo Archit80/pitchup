@@ -1,5 +1,4 @@
 import { defineType, defineField } from "sanity";
-import { UserIcon } from "lucide-react";
 
 export const startup = defineType({
     name: "startup",
@@ -21,11 +20,10 @@ export const startup = defineType({
             }
           }),
     
-    
         defineField({
             name: "author",
             type: "reference",
-            to: [{ type: "author" }],
+            to: { type: "author" },
           }),
     
         defineField({
@@ -47,11 +45,12 @@ export const startup = defineType({
         defineField({
             name: "image",
             type: "url",
+            validation: (Rule) => Rule.required().error("Image URL is required"),
           }),
         defineField({
             name: "pitch",
             type: "markdown",
-          }),
+        }),
     
     ],
     preview: {
