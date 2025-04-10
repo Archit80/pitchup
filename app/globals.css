@@ -252,11 +252,11 @@
         background-image: linear-gradient(
                 to right,
                 transparent 49.5%,
-                rgba(251, 232, 67, 0.2) 49.5%,
-                rgba(251, 232, 67, 0.6) 50.5%,
+                rgba(251, 233, 67, 0.319) 49.5%,
+                rgba(255, 236, 63, 0.582) 50.5%,
                 transparent 50.5%
         );
-        background-size: 5% 100%;
+        background-size: 4% 100%;
         background-position: center;
         background-repeat: repeat-x;
     }
