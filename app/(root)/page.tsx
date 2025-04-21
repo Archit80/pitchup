@@ -6,6 +6,7 @@ import { STARTUPS_QUERY } from "../../sanity/lib/queries";
 import { StartupCardType } from "@/components/StartupCard";
 import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 import { auth } from "@/auth";
+import Footer from "@/components/Footer";
 
 // const posts = await client.fetch(STARTUPS_QUERY);
 
@@ -59,7 +60,9 @@ export default async function Home({searchParams}: {searchParams:
       </section>
 
       <SanityLive />
-
+    
+       <Footer />       
+            
     </div>
   );
 }
