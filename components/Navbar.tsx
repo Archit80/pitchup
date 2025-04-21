@@ -3,6 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import {auth, signIn, signOut} from "@/auth";
 import { FaGithub } from 'react-icons/fa';
+import { BadgePlus, LogOut } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
 async function Navbar() {
     const session = await auth();
@@ -20,7 +22,8 @@ async function Navbar() {
                     {session && user ? (
                         <>
                             <Link href="/startup/create" className="text-lg font-semibold hover:text-gray-500 p-2 rounded-xl">
-                                <span>Create</span>
+                                <span className='max-sm:hidden'>Create</span>
+                                <BadgePlus className='sm:hidden' size={6} />
                             </Link>
 
                             <form
@@ -30,12 +33,24 @@ async function Navbar() {
                                 }} className="text-lg font-semibold">
 
                                 <button type="submit" className="text-lg font-semibold cursor-pointer hover:text-gray-500 p-2 rounded-xl">
-                                    Logout
+                                    <span className='max-sm:hidden'>Logout</span>
+                                    <LogOut className='size-6 sm:hidden text-red-500' />
                                 </button>
                             </form>
 
                             <Link href={`/profile/${user.id || ''}`} className="text-lg font-semibold hover:text-gray-500 p-2 rounded-xl">
-                                <span>{user.name}</span>
+                                {/* <span>{user.name}</span> */}
+                                <Avatar className='h-12 w-12' >
+                                    <AvatarImage
+                                        src = {session?.user?.image || ''}                            
+                                        alt = {session?.user?.name || ''}
+                                    />
+
+                                        <AvatarFallback> 
+                                            AV
+                                        </AvatarFallback>
+
+                                </Avatar>
                             </Link>
                         </>
                     ) : (

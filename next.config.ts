@@ -1,6 +1,6 @@
-import type { NextConfig } from "next";
+const { withSentryConfig } = require("@sentry/nextjs");
 
-const nextConfig: NextConfig = {
+const nextConfig = {
   images: {
     dangerouslyAllowSVG: true,
     remotePatterns: [
@@ -14,11 +14,15 @@ const nextConfig: NextConfig = {
     // after: true,
     // ppr: "incremental", // )
     // incrementalCacheHandlerPath: "incremental", // Example experimental feature
-    },
+  },
   devIndicators: {
-      buildActivity: true,
-      buildActivityPosition: "bottom-right",
-          },
+    buildActivity: true,
+    buildActivityPosition: "bottom-right",
+  },
 };
 
-export default nextConfig;
+const sentryWebpackPluginOptions = {
+  silent: true, // Suppresses all logs
+};
+
+module.exports = withSentryConfig(nextConfig, sentryWebpackPluginOptions);
