@@ -9,8 +9,8 @@ import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 async function Navbar() {
     const session = await auth();
     const user = session?.user;
-
-    return (
+    console.log("user id",session?.id);
+    return (    
         <header className="flex px-5 py-3 shadow-md w-full justify-between items-center bg-gradient-to-r text-black bg-white font-work-sans">
             <nav className="flex items-center justify-between w-full">
                 <Link href="/" className="text-2xl font-bold flex items-center gap-2">
@@ -23,7 +23,7 @@ async function Navbar() {
                         <>
                             <Link href="/startup/create" className="text-lg font-semibold hover:text-gray-500 p-2 rounded-xl">
                                 <span className='max-sm:hidden'>Create</span>
-                                <BadgePlus className='sm:hidden' size={6} />
+                                <BadgePlus className='sm:hidden size-6' />
                             </Link>
 
                             <form
@@ -38,7 +38,7 @@ async function Navbar() {
                                 </button>
                             </form>
 
-                            <Link href={`/profile/${user.id || ''}`} className="text-lg font-semibold hover:text-gray-500 p-2 rounded-xl">
+                            <Link href={`/user/${session?.id}`} className="text-lg font-semibold hover:text-gray-500 p-2 rounded-xl">
                                 {/* <span>{user.name}</span> */}
                                 <Avatar className='h-12 w-12' >
                                     <AvatarImage

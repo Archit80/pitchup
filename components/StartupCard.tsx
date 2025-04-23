@@ -54,9 +54,9 @@ const StartupCard = ({post}: {post: StartupCardType}) => {
               src={post?.image}
               alt={post?.title}
               className="startup-card_img w-full"
-              layout="responsive"
-              width={16} // Aspect ratio width
-              height={9} // Aspect ratio height
+            //   layout="responsive"
+              width={1080} // Aspect ratio width
+              height={720} // Aspect ratio height
             />
        </Link>
         
