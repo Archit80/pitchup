@@ -1,14 +1,12 @@
-// import Image from "next/image";
 import SearchForm from "@/components/SearchForm"; 
 import StartupCard from "@/components/StartupCard";
 import { STARTUPS_QUERY } from "../../sanity/lib/queries";
-// import { client } from "@/sanity/lib/client";
 import { StartupCardType } from "@/components/StartupCard";
 import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 import { auth } from "@/auth";
 import Footer from "@/components/Footer";
 
-// const posts = await client.fetch(STARTUPS_QUERY);
+export const dynamic = 'force-dynamic';
 
 export default async function Home({searchParams}: {searchParams:
    Promise<{query?: string}>}) {
@@ -19,11 +17,12 @@ export default async function Home({searchParams}: {searchParams:
   const session = await auth();
   console.log("Session:", session?.id);  
 
+
   const { data: posts } = await sanityFetch({
     query: STARTUPS_QUERY,
-    params, // Pass an empty string if no search term
+    params
   });
-    // console.log("Fetched posts:", posts);
+    
   return (
     <div className="bg-white h-screen w-full font-work-sans">
 
