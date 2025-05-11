@@ -14,6 +14,7 @@ export default async function Home({searchParams}: {searchParams:
   const query = (await searchParams).query;
   const params = { search: query ? `${query}*` : null };
     console.log("Search params:", params);
+    
   const session = await auth();
   console.log("Session:", session?.id);  
 
