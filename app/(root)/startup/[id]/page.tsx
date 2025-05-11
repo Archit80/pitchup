@@ -16,6 +16,7 @@ import {auth} from '@/auth';
 import CommentForm from '@/components/CommentForm';
 import DOMPurify from 'isomorphic-dompurify'; // for SSR-safe purification
 import KebabMenu from '@/components/ui/KebabMenu';
+import ScrollToTopLink from '@/components/ui/ScrollToTopLink';
 
 export const revalidate = 0;
 export const experimental_ppr= true;
@@ -140,8 +141,15 @@ const page = async ({params}: {params: Promise<{id: string}>}) => {
             ))
           }
         </div >
+        {userId ? (
+          <CommentForm postId={post?._id} />
 
-        <CommentForm postId={post?._id} />
+        )
+        : (
+          <p className='text-16-medium text-black-200 max-w-4xl mx-auto'> Please <ScrollToTopLink href='#' className='text-blue-500'> login </ScrollToTopLink> to leave a comment </p>
+        )
+        }
+
           
         </div>
         
