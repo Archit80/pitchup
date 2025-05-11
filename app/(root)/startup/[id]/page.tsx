@@ -7,7 +7,7 @@ import { client } from '@/sanity/lib/client';
 import { notFound } from 'next/navigation';
 import { formatDate } from '@/lib/utils';
 import markdownit from 'markdown-it';
-import { parse } from 'path';
+// import { parse } from 'path';
 import { Suspense } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 import View from '@/components/View';
