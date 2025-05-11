@@ -8,6 +8,8 @@ import { notFound } from 'next/navigation';
 import React from 'react';
 import { Suspense } from 'react';
 export const experimental_ppr = true;
+export const revalidate = 0;
+export const dynamic = 'force-dynamic';
 
 const page = async ({ params }: { params: { id: string } }) => {
   const { id } = await params; // Extract the id from params
@@ -46,7 +48,6 @@ const page = async ({ params }: { params: { id: string } }) => {
                 {session?.id ===id ? 'Your Startups' : `${user.name}'s Startups`}
             </p>
             <ul className='card_grid-sm'>
-                {/* TODO: ADD USER STARTUPS */}
                 <Suspense fallback={<StartupCardSkeleton />}>
                 <UserStartups id={id} />
                 </Suspense>

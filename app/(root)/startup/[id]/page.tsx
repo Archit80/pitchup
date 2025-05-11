@@ -12,6 +12,12 @@ import { Suspense } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 import View from '@/components/View';
 import StartupCard, { StartupCardType } from '@/components/StartupCard';
+import {auth} from '@/auth';
+import CommentForm from '@/components/CommentForm';
+import DOMPurify from 'isomorphic-dompurify'; // for SSR-safe purification
+import KebabMenu from '@/components/ui/KebabMenu';
+
+export const revalidate = 0;
 export const experimental_ppr= true;
 export const dynamic = 'force-dynamic'
 
@@ -22,15 +28,25 @@ const md =  markdownit();
 const page = async ({params}: {params: Promise<{id: string}>}) => {
   const id = (await params).id
   console.log(id)
+  
+    const session = await auth();   
+    const userId = session?.id;
 
   const [post, {select:editorPosts}] = await Promise.all([
-    client.fetch(STARTUP_BY_ID_QUERY, {id}),
+    client.fetch(STARTUP_BY_ID_QUERY,  { id, timestamp: new Date().getTime() }),
     client.fetch(PLAYLIST_BY_SLUG_QUERY, {slug: 'editor-picks'})
   ]) 
-  
+  const safePitch = typeof post?.pitch === 'string' ? post.pitch.trim() : '';
+
+  // console.log("🚨 Pitch content:", post?.pitch);
+  // console.log(typeof post?.pitch); // should be "string"
+
   // const post = await client.fetch(STARTUP_BY_ID_QUERY, {id});
   if(!post) return notFound();
-  const parsedContent = md.render(post?.pitch || '');
+  // const parsedContent = md.render(post?.pitch || '');
+  const cleanedMarkdown = DOMPurify.sanitize(safePitch);
+  const parsedContent = md.render(cleanedMarkdown); 
+  
   // // console.log(parsedContent)
   // const {select : editorPosts} = await client.fetch(PLAYLIST_BY_SLUG_QUERY, {slug: 'editor-picks'});
   return ( 
@@ -42,7 +58,7 @@ const page = async ({params}: {params: Promise<{id: string}>}) => {
     </section>
 
     <section className='section_container'>
-      <img src={post?.image} alt="startup image thumbnai" className='w-full h-auto rounded-xl' />
+      <img src={post?.image} alt="startup image thumbnai" className='w-full mx-auto h-auto rounded-xl' />
       
       <div className='space-y-5 mx-auto max-w-4xl mt-10'>
         <div className='flex-between gap-5'>
@@ -52,7 +68,8 @@ const page = async ({params}: {params: Promise<{id: string}>}) => {
                 alt={post?.author?.name || "Author image"} 
                 width={64} 
                 height={64} 
-                className="rounded-full drop-shadow-lg" 
+                className="rounded-full drop-shadow-lg"
+                loading="lazy" 
               />
               <div>
                 <p className='text-20-medium'>{post?.author?.name}</p>
@@ -74,8 +91,61 @@ const page = async ({params}: {params: Promise<{id: string}>}) => {
         }  
           
         </div>
-
+        <br />
         <hr className='divider' />
+
+        {/* // COMMENTS SECTION */}
+         <div className='mb-16'>
+        <div className='flex-between max-w-4xl mx-auto' >
+          <p className='text-30-semibold'> Comments </p>
+          <p className='text-16-medium text-black-200'> {post?.comments?.length || 0} Comments </p>
+        </div>
+
+        <div className='max-w-4xl mx-auto my-4'>
+          { (!post?.comments?.length) && (
+            <p className='font-medium !text-gray-700 '> No comments yet. Be the first to comment! </p>
+          )}
+
+          { 
+            post?.comments?.map((comment: any, index: number) => (
+              
+              <div key={index} className='flex items-start '>
+
+                <div  className='flex items-start gap-3 my-4 w-full mx-auto'>
+
+                    <Image 
+                      src={comment?.author?.image || "/fallback-image.jpg"} 
+                      alt={comment?.author?.name || "Comment author image"} 
+                      width={48} 
+                      height={48} 
+                      className="rounded-full" 
+                    />
+
+                    <div>
+                      <p className='text-16-medium '>{comment?.author?.name}<span className='text-gray-600 !font-normal text-sm'> {formatDate(comment?.commentedAt)} </span></p>
+                      <p className='font-normal break-all leading-tight'>{comment.text}</p>
+                    </div>
+
+                </div>
+                <div className='flex flex-col items-start ml-16 py-4 justify-start'>
+                {(comment?.author?._id === userId) && (
+                    <KebabMenu postId={post?._id} commentedAt = {comment?.commentedAt} />
+
+                )}
+                  
+                  </div>    
+              </div>
+
+
+            ))
+          }
+        </div >
+
+        <CommentForm postId={post?._id} />
+          
+        </div>
+        
+        {/* <hr className='divider' />  */}
 
         {editorPosts?.length > 0 && (
           <div className='max-w-4xl mx-auto'>

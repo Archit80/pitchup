@@ -52,6 +52,23 @@ export const startup = defineType({
             type: "markdown",
         }),
     
+        defineField({
+            name: "comments",
+            type: "array",
+            of:[
+            { 
+              type: "object",
+              fields: [
+                {name: "author", type: "reference", to: {type: "author"}, 
+                validation: (Rule) => Rule.required().error("Author is required"),
+                },
+                {name: "text", type : "string"},
+                {name: "createdAt", type: "datetime"},
+              ]
+            }
+            ]
+        }),
+    
     ],
     preview: {
       select: {

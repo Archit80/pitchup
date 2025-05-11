@@ -41,7 +41,12 @@ export const STARTUP_BY_ID_QUERY = defineQuery(
     description, 
     category,
     author->{_id, name, username, image, bio},
-    pitch     
+    pitch,
+    comments[]{
+    author->{_id, name, image, username},
+    text,
+    commentedAt,
+    }     
   }`
 );
 

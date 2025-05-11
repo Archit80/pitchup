@@ -14,3 +14,5 @@ export const writeClient = createClient({
 if(!writeClient.config().token) {
   throw new Error("Write client requires a token to be set in the environment variables")
 }
+
+console.log("writeClient is being used in:", new Error().stack);

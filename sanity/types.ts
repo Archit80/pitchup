@@ -161,6 +161,17 @@ export type Startup = {
   category?: string;
   image?: string;
   pitch?: string;
+  comments?: Array<{
+    author?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "author";
+    };
+    text?: string;
+    createdAt?: string;
+    _key: string;
+  }>;
 };
 
 export type Slug = {
