@@ -113,14 +113,15 @@ const page = async ({params}: {params: Promise<{id: string}>}) => {
               <div key={index} className='flex items-start '>
 
                 <div  className='flex items-start gap-3 my-4 w-full mx-auto'>
-
+                  <Link href={`/user/${comment?.author?._id}`} className='flex items-center gap-3 mb-3'>
                     <Image 
                       src={comment?.author?.image || "/fallback-image.jpg"} 
                       alt={comment?.author?.name || "Comment author image"} 
                       width={48} 
                       height={48} 
                       className="rounded-full" 
-                    />
+                      />
+                  </Link>
 
                     <div>
                       <p className='text-16-medium '>{comment?.author?.name}<span className='text-gray-600 !font-normal text-sm'> {formatDate(comment?.commentedAt)} </span></p>
