@@ -4,7 +4,7 @@ export const startup = defineType({
     name: "startup",
     title: "Startup",
     type: "document",
-    // icon: UserIcon,
+     
     fields: [
         
         defineField({
@@ -63,11 +63,25 @@ export const startup = defineType({
                 validation: (Rule) => Rule.required().error("Author is required"),
                 },
                 {name: "text", type : "string"},
-                {name: "createdAt", type: "datetime"},
+                {name: "commentedAt", type: "datetime"},
               ]
             }
             ]
         }),
+ 
+        defineField({
+          name:"upvotes",
+          type: "array",
+          of: [{ type: "reference", to: [{ type: "author" }] }],
+          description: "Users who upvoted",
+        }),
+        
+        defineField({
+          name:"downvotes",
+          type: "array",
+          of: [{ type: "reference", to: [{ type: "author" }] }],
+          description: "Users who downvoted",
+        })
     
     ],
     preview: {

@@ -29,6 +29,7 @@
     "@uiw/react-md-editor": "^4.0.5",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "crypto": "^1.0.1",
     "lucide-react": "^0.485.0",
     "markdown-it": "^14.1.0",
     "next": "^15.2.4",

@@ -5,6 +5,8 @@ import React from "react";
 const ScrollToTopLink = ({ href, children, ...props }: React.ComponentProps<typeof Link>) => {
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     // Let Next.js handle the navigation, then scroll to top
+    e.preventDefault();
+    // Use setTimeout to ensure the scroll happens after the navigation
     setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 0);
   };
 

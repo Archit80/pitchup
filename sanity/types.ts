@@ -169,8 +169,22 @@ export type Startup = {
       [internalGroqTypeReferenceTo]?: "author";
     };
     text?: string;
-    createdAt?: string;
+    commentedAt?: string;
     _key: string;
+  }>;
+  upvotes?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "author";
+  }>;
+  downvotes?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "author";
   }>;
 };
 

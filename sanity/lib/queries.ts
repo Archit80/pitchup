@@ -46,7 +46,13 @@ export const STARTUP_BY_ID_QUERY = defineQuery(
     author->{_id, name, image, username},
     text,
     commentedAt,
-    }     
+    },
+     upvotes[]{
+      _id, _ref
+    },
+    downvotes[]{
+      _id, _ref
+    }    
   }`
 );
 

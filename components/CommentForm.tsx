@@ -50,31 +50,7 @@ const CommentForm = ({ postId }: { postId: string }) => {
     }
     setIsSubmitting(false);
   };
-    //   try {
-  //     await 
-  //       .patch(postId)
-  //       .setIfMissing({ comments: [] })
-  //       .append("comments", [
-  //         {
-  //           _type: "comment",
-  //           text: comment,
-  //           createdAt: new Date().toISOString(),
-  //           author: {
-  //             _type: "reference",
-  //             _ref: session?.id, // Replace with the logged-in user's ID
-  //           },
-  //         },
-  //       ])
-  //       .commit();
-
-  //     setComment("");
-  //     router.refresh(); // Refresh the page to show the new comment
-  //   } catch (error) {
-  //     console.error("Failed to post comment:", error);
-  //   } finally {
-  //     setIsSubmitting(false);
-  //   }
-  // };
+   
 
   return (
     <form onSubmit={handleSubmit} className=" max-w-4xl mx-auto flex items-center justify-center gap-4 ">
