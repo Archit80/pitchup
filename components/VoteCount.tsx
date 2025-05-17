@@ -48,38 +48,34 @@ const VoteCount = ({ post, userId, disabled }: VoteCountProps) => {
 //   }, [upVotesCount, downVotesCount]);
 
   const handleUpVote = async () => {
-    if (voted === "up" || isVoting) return;
+    if (isVoting) return;
     setIsVoting(true);
     try {
       const res = await toggleUpVote(post._id);
       if (res.success) {
-        setVoted("up");
-        // setLocalUpvotes((prev) => prev + 1);
-        // if (voted === "down") setLocalDownvotes((prev) => prev - 1);
-        router.refresh(); // Optionally keep this for server sync
+        // Toggle logic: if already upvoted, remove vote; else, set to up
+        setVoted(voted === "up" ? null : "up");
+        router.refresh();
       } else {
         console.error("Upvote failed:", res.error);
       }
-      console.log("Upvote operation successful:", post._id);
       return res;
     } catch (error) {
       console.error("Failed to upvote:", error);
     } finally {
       setIsVoting(false);
-
     }
   };
 
   const handleDownVote = async () => {
-    if (voted === "down" || isVoting) return;
+    if (isVoting) return;
     setIsVoting(true);
     try {
       const res = await toggleDownVote(post._id);
       if (res.success) {
-        setVoted("down");
-        // setLocalDownvotes((prev) => prev + 1);
-        // if (voted === "up") setLocalUpvotes((prev) => prev - 1);
-        router.refresh(); // Optionally keep this for server sync
+        // Toggle logic: if already downvoted, remove vote; else, set to down
+        setVoted(voted === "down" ? null : "down");
+        router.refresh();
       } else {
         console.error("Downvote failed:", res.error);
       }
@@ -98,7 +94,7 @@ const VoteCount = ({ post, userId, disabled }: VoteCountProps) => {
           <button
             onClick={handleUpVote}
             aria-label="Upvote"
-              disabled={disabled || isVoting || voted === "up"}
+              disabled={disabled || isVoting}
             onMouseEnter={() => setHover("up")}
             onMouseLeave={() => setHover(null)}
             className={`p-1 rounded hover:bg-gray-200 transition ${
@@ -117,7 +113,7 @@ const VoteCount = ({ post, userId, disabled }: VoteCountProps) => {
           <button
             onClick={handleDownVote}
             aria-label="Downvote"
-              disabled={disabled || isVoting || voted === "down"}
+              disabled={disabled || isVoting}
             onMouseEnter={() => setHover("down")}
             onMouseLeave={() => setHover(null)}
             className={`p-1 rounded hover:bg-gray-200 transition ${
