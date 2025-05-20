@@ -45,10 +45,10 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const cleanedMarkdown = DOMPurify.sanitize(safePitch);
   const parsedContent = md.render(cleanedMarkdown);
 
-  const upVotesCount = post.upvotes.length;
-  const downVotesCount = post.downvotes.length;
+  // const upVotesCount = post.upvotes.length;
+  // const downVotesCount = post.downvotes.length;
   // // const [upVotes, setUpVotes] = useState(upVotesCount);
-  const score = upVotesCount - downVotesCount;
+  // const score = upVotesCount - downVotesCount;
 
   return (
     <>
@@ -113,10 +113,10 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
             <div className={`${
               !userId ? "pointer-events-none opacity-50" : ""
             }`}>
-            <VoteCount post={post} userId={userId} disabled={!userId} />
+            <VoteCount post={post} userId={userId} />
 
             </div>
-            <span className="font-bold ml-2">{score}</span>
+            {/* <span className="font-bold ml-2">{score}</span> */}
           </div>
         </div>
 
