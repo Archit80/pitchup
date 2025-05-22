@@ -131,7 +131,7 @@ const VoteCount = ({ post, userId, disabled }: VoteCountProps) => {
           )}
         </div>
       </div>
-       <span className="font-bold ml-2">{localUpvotes.length - localDownvotes.length} (client)</span>
+       <span className="font-bold ml-2">{localUpvotes.length - localDownvotes.length} </span>
     </div>
   );
 };
