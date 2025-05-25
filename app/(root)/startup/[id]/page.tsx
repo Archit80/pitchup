@@ -60,7 +60,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
 
       <section className="section_container">
         <img
-          src={post?.image}
+          src={String(post?.image || "https://plus.unsplash.com/premium_vector-1721386085379-8df3c43a062d?q=80&w=2360&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D").trim()}
           alt="startup image thumbnail"
           className="w-full mx-auto h-auto rounded-xl"
         />
