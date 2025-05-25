@@ -51,7 +51,7 @@ const StartupCard = ({post}: {post: StartupCardType}) => {
             </p>
         <Link href={`/startup/${_id}`} className='w-full h-full'>
             <Image
-              src={post?.image}
+              src={String(post?.image).trim()}
               alt={post?.title}
               className="startup-card_img w-full"
             //   layout="responsive"

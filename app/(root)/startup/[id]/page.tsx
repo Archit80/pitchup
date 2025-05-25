@@ -36,7 +36,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   const [post, { select: editorPosts }] = await Promise.all([
     client.fetch(STARTUP_BY_ID_QUERY, { id, timestamp: new Date().getTime() }),
-    client.fetch(PLAYLIST_BY_SLUG_QUERY, { slug: "editor-picks" }),
+    client.fetch(PLAYLIST_BY_SLUG_QUERY, { slug: "featured-startups" }),
   ]);
   const safePitch = typeof post?.pitch === "string" ? post.pitch.trim() : "";
 
@@ -198,7 +198,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
 
         {editorPosts?.length > 0 && (
           <div className="max-w-4xl mx-auto">
-            <p className="text-30-semibold">Editor Picks</p>
+            <p className="text-30-semibold">Featured Startups</p>
             <ul className="mt-7 card_grid-sm">
               {editorPosts.map((post: StartupCardType, index: number) => (
                 <StartupCard key={index} post={post} />

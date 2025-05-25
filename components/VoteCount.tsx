@@ -132,6 +132,10 @@ const VoteCount = ({ post, userId, disabled }: VoteCountProps) => {
         </div>
       </div>
        <span className="font-bold ml-2">{localUpvotes.length - localDownvotes.length} </span>
+          {!userId && (
+            <span className=" text-black font-bold ml-2">(Please Login to Vote)</span>
+              ) 
+          }
     </div>
   );
 };
